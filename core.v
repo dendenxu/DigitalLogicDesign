@@ -1,9 +1,9 @@
 module core (input clk,
              input [11:0] keystroke,
-             output reg [15:0][9:0] snake1,
-             output reg [15:0][9:0] snake2,
-             output reg [6:0] score1,
-             output reg [6:0] score2,
+             output reg [159:0] snake1,
+             output reg [159:0] snake2,
+             output reg [4:0] score1,
+             output reg [4:0] score2,
              output reg [9:0] food1,
              output reg [9:0] food2);
     //  output reg snake1 [89:0][119:0],
@@ -54,8 +54,8 @@ module core (input clk,
      */
     wire [1:0] d1;
     wire [1:0] d2;
-    wire [15:0][9:0] snake1_wire;
-    wire [15:0][9:0] snake2_wire;
+    wire [159:0] snake1_wire;
+    wire [159:0] snake2_wire;
     wire clk1;
     wire clk2;
     wire should_stop1;
@@ -75,13 +75,20 @@ module core (input clk,
     // 10 normal: 1HZ
     // 11 slower: 0.5HZ
     reg [1:0] clk_rate;
-    always@(posedge clk) begin
+    always@(posedge clk_game) begin
         if(keystroke[10]) clk_rate <= clk_rate + 1;
         if(keystroke[11]) clk_rate <= clk_rate - 1;
     end
+    reg changed;
     always @(posedge clk) begin
-        snake1 <= snake1_wire;
-        snake2 <= snake2_wire;
+        if(clk_game&&~changed) begin
+            snake1 <= snake1_wire;
+            snake2 <= snake2_wire;
+            changed <= 1;
+        end
+        else if (~clk_game) begin
+            changed <= 0;
+        end
     end
     initial begin
         clk_rate = 0;
@@ -91,7 +98,11 @@ module core (input clk,
         // length of 5, score of zero
         score1 = 1;
         score2 = 1;
+        snake1 = 160'b_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_00_0000_0001_00_0000_0010;
+        snake2 = 160'b_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_00_0000_1001_00_0000_1010;
     end
+    // assign should_stop1_1 = 0;
+    // assign should_stop2_1 = 0;
     clk_div u_clk_div (
     .clk         (clk),
     .clk_rate    (clk_rate),

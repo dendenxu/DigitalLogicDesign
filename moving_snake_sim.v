@@ -1,70 +1,55 @@
-`timescale 1ns / 1ps
-
-////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer:
-//
-// Create Date:   14:31:52 12/23/2019
-// Design Name:   moving_snake
-// Module Name:   D:/3180105504/Project/moving_sim.v
-// Project Name:  Project
-// Target Device:  
-// Tool versions:  
-// Description: 
-//
-// Verilog Test Fixture created by ISE for module: moving_snake
-//
-// Dependencies:
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-////////////////////////////////////////////////////////////////////////////////
-/* verilator lint_off STMTDLY */
-
-module moving_sim;
+module moving_snake_sim;
 
     // Inputs
     reg clk;
+    reg clk_game;
     reg [1:0] di;
     reg [3:0] len;
-    reg [9:0][15:0] prev_pos_num;
-    wire [9:0][15:0] next_pos_num;
+    reg [159:0] prev_pos_num;
+    wire [159:0] next_pos_num;
     wire should_stop;
 
     // Instantiate the Unit Under Test (UUT)
     moving_snake uut (
-        .clk(clk), 
+        .clk(clk_game), 
         .di(di), 
         .len(len),
         .prev_pos_num(prev_pos_num),
         .next_pos_num(next_pos_num),
         .should_stop(should_stop)
     );
-
+    parameter initial_position = 160'b_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_00_0000_0001_00_0000_0010;
     initial begin
         // Initialize Inputs
         #100;
         di = 2'b01;
-        len = 1;
-        // Wait 100 ns for global reset to finish
-        
+        len = 2;
+        prev_pos_num = initial_position;
         // Add stimulus here
+        #4000 di = 2'b11;
     end
-    generate
-    genvar i;
-    for (i=0; i<16; i = i+1) begin
-        initial prev_pos_num[i] = i;
-    end
-    endgenerate
+    
     initial begin
         clk = 0;
         forever begin
-            #10 clk = ~clk;
+            #5 clk = ~clk;
         end
     end
-
-      
+    initial begin
+        clk_game = 0;
+        forever begin
+            #50 clk_game = ~clk_game;
+        end
+    end
+    reg changed;
+    always @(posedge clk) begin
+        if(clk_game&&~changed) begin
+            prev_pos_num <= next_pos_num;
+            changed <= 1;
+        end
+        else if (~clk_game) begin
+            changed <= 0;
+        end
+    end
 endmodule
 

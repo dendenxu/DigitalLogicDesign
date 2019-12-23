@@ -32,7 +32,7 @@ module moving_snake #(index = 1,
     genvar j;
     generate
     for (j = num_len; j < max_len*num_len; j = j + 1) begin
-        assign next_pos_num[j] = (should_stop&&j<len*num_len)?prev_pos_num[j]:prev_pos_num[j-num_len];
+        assign next_pos_num[j] = (should_stop||j>len*num_len)?prev_pos_num[j]:prev_pos_num[j-num_len];
     end
     endgenerate
     always @(posedge clk) begin
@@ -45,7 +45,7 @@ module moving_snake #(index = 1,
                         next_pos <= prev_pos_num[num_len-1:0]-1;
                     end
                     else begin
-                        next_pos <= prev_pos_num[(len-1)*num_len+:10];
+                        next_pos <= prev_pos_num[(len-1)*num_len+:num_len];
                     end
                 end
             end
@@ -57,7 +57,7 @@ module moving_snake #(index = 1,
                         next_pos <= prev_pos_num[num_len-1:0]+1;
                     end
                     else begin
-                        next_pos <= prev_pos_num[(len-1)*num_len+:10];
+                        next_pos <= prev_pos_num[(len-1)*num_len+:num_len];
                     end
                 end
             end
@@ -69,7 +69,7 @@ module moving_snake #(index = 1,
                         next_pos <= prev_pos_num[num_len-1:0]-32;
                     end
                     else begin
-                        next_pos <= prev_pos_num[(len-1)*num_len+:10];
+                        next_pos <= prev_pos_num[(len-1)*num_len+:num_len];
                     end
                 end
             end
@@ -81,7 +81,7 @@ module moving_snake #(index = 1,
                         next_pos <= prev_pos_num[num_len-1:0]+32;
                     end
                     else begin
-                        next_pos <= prev_pos_num[(len-1)*num_len+:10];
+                        next_pos <= prev_pos_num[(len-1)*num_len+:num_len];
                     end
                 end
             end

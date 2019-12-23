@@ -1,3 +1,4 @@
+/* verilator lint_off STMTDLY */
 module clk_div(input clk,
                input [1:0] clk_rate,
                output reg clk_game);
@@ -9,12 +10,12 @@ module clk_div(input clk,
         clk_game = 0;
     end
     // when clk_rate is changed, we change the ratio
-    always @(*) begin
+    always @(posedge clk) begin
         case (clk_rate)
-        2'b00: ratio = 1;
-        2'b01: ratio = 2;
-        2'b10: ratio = 4;
-        2'b11: ratio = 8;
+        2'b00: ratio <= 1;
+        2'b01: ratio <= 2;
+        2'b10: ratio <= 4;
+        2'b11: ratio <= 8;
         endcase
     end
     always @ (posedge clk) begin
