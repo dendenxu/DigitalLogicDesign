@@ -1,8 +1,11 @@
-module moving_snake #(index = 1)
+module moving_snake #(index = 1,
+                      max_len = 16,
+                      num_len = 10)
                      (input clk,
                       input [1:0] di,
-                      input [30:0][15:0] prev_pos_num,
-                      output reg [30:0][15:0] next_pos_num,
+                      input [3:0] len,
+                      input [15:0][9:0] prev_pos_num,
+                      output [15:0][9:0] next_pos_num,
                       output reg should_stop);
     /**@param di
      * two bit representation of direction
@@ -12,71 +15,76 @@ module moving_snake #(index = 1)
      * 11 down
      */
     initial begin
+        should_stop = 0;
         // intial position
-        for (i = 0; i < 5; i = i + 1) begin
-            next_pos_num[i] = index ? 30 - i : i;
-        end
-        for (i = 5; i <= 30; i = i + 1) begin
-            next_pos_num[i] = 'hffff;
-        end
+        // for (i = 0; i < 5; i = i + 1) begin
+        //     next_pos_num[i] = index ? 30 - i : i;
+        // end
+        // for (i = 5; i < = 30; i = i + 1) begin
+        //     next_pos_num[i] = 'hffff;
+        // end
     end
     /**the previous positions are all copied mindlessly when they are able to be copied */
-    reg [15:0] i;
+    // actually previous implementation is much too complex for our board
+    // so we just evaluate current situation and save the state in two small registers
+    reg [9:0] next_pos;
+    assign next_pos_num[num_len-1:0] = should_stop?prev_pos_num[num_len-1:0]:next_pos;
+    genvar j;
+    generate
+    for (j = 1; j < max_len; j = j + 1) begin
+        assign next_pos_num[(j+1)*num_len-1:j*num_len] = (should_stop&&j<len)?prev_pos_num[(j+1)*num_len-1:j*num_len]:prev_pos_num[(j)*num_len-1:(j-1)*num_len];
+    end
+    endgenerate
     always @(posedge clk) begin
         case (di)
             2'b00: begin
-                if (prev_pos_num[0]%120 == 0) begin
-                    should_stop <= 1;
-                end
+                if (prev_pos_num[0]%32 == 0) should_stop <= 1;
                 else begin
+                    should_stop <= 0;
                     if (prev_pos_num[1] != prev_pos_num[0]-1) begin
-                        for (i = 1; i <= 30; i = i + 1) begin
-                            next_pos_num[i] <= prev_pos_num[i-1];
-                        end
-                        next_pos_num[0] <= prev_pos_num[0]-1;
+                        next_pos <= prev_pos_num[0]-1;
+                    end
+                    else begin
+                        next_pos <= prev_pos_num[len];
                     end
                 end
             end
             2'b01: begin
-                if (prev_pos_num[0]%120 == 119) begin
-                    should_stop <= 1;
-                end
+                if (prev_pos_num[0]%32 == 31) should_stop <= 1;
                 else begin
+                    should_stop <= 0;
                     if (prev_pos_num[1] != prev_pos_num[0]+1) begin
-                        for (i = 1; i <= 30; i = i + 1) begin
-                            next_pos_num[i] <= prev_pos_num[i-1];
-                        end
-                        next_pos_num[0] <= prev_pos_num[0]+1;
+                        next_pos <= prev_pos_num[0]+1;
+                    end
+                    else begin
+                        next_pos <= prev_pos_num[len];
                     end
                 end
             end
             2'b10: begin
-                if (prev_pos_num[0]/120 == 0) begin
-                    should_stop <= 1;
-                end
+                if (prev_pos_num[0]/32 == 0) should_stop <= 1;
                 else begin
-                    if (prev_pos_num[1] != prev_pos_num[0]-120) begin
-                        for (i = 1; i <= 30; i = i + 1) begin
-                            next_pos_num[i] <= prev_pos_num[i-1];
-                        end
-                        next_pos_num[0] <= prev_pos_num[0]-120;
+                    should_stop <= 0;
+                    if (prev_pos_num[1] != prev_pos_num[0]-32) begin
+                        next_pos <= prev_pos_num[0]-32;
+                    end
+                    else begin
+                        next_pos <= prev_pos_num[len];
                     end
                 end
             end
             2'b11: begin
-                if (prev_pos_num[0]/120 == 79) begin
-                    should_stop <= 1;
-                end
+                if (prev_pos_num[0]/32 == 23) should_stop <= 1;
                 else begin
-                    if (prev_pos_num[1] != prev_pos_num[0]+120) begin
-                        for (i = 1; i <= 30; i = i + 1) begin
-                            next_pos_num[i] <= prev_pos_num[i-1];
-                        end
-                        next_pos_num[0] <= prev_pos_num[0]+120;
+                    should_stop <= 0;
+                    if (prev_pos_num[1] != prev_pos_num[0]+32) begin
+                        next_pos <= prev_pos_num[0]+32;
+                    end
+                    else begin
+                        next_pos <= prev_pos_num[len];
                     end
                 end
             end
         endcase
     end
-    
 endmodule

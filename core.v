@@ -1,11 +1,11 @@
 module core (input clk,
-             input [15:0] keystroke,
-             output [30:0][15:0] snake1,
-             output [30:0][15:0] snake2,
-             output reg [15:0] score1,
-             output reg [15:0] score2,
-             output reg [15:0] food1,
-             output reg [15:0] food2);
+             input [11:0] keystroke,
+             output reg [15:0][9:0] snake1,
+             output reg [15:0][9:0] snake2,
+             output reg [6:0] score1,
+             output reg [6:0] score2,
+             output reg [9:0] food1,
+             output reg [9:0] food2);
     //  output reg snake1 [89:0][119:0],
     //  output reg snake2 [89:0][119:0],
     /**
@@ -54,6 +54,8 @@ module core (input clk,
      */
     wire [1:0] d1;
     wire [1:0] d2;
+    wire [15:0][9:0] snake1_wire;
+    wire [15:0][9:0] snake2_wire;
     wire clk1;
     wire clk2;
     wire should_stop1;
@@ -73,23 +75,22 @@ module core (input clk,
     // 10 normal: 1HZ
     // 11 slower: 0.5HZ
     reg [1:0] clk_rate;
-    wire [1:0] clk_rate_inc;
-    wire [1:0] clk_rate_dec;
-    assign clk_rate_inc = clk_rate + 1;
-    assign clk_rate_dec = clk_rate - 1;
-    always @(keystroke[10], keystroke[11]) begin
-        if (keystroke[10]) clk_rate = clk_rate_inc;
-        if (keystroke[11]) clk_rate = clk_rate_dec;
+    always@(posedge clk) begin
+        if(keystroke[10]) clk_rate <= clk_rate + 1;
+        if(keystroke[11]) clk_rate <= clk_rate - 1;
     end
-    reg [15:0] i;
+    always @(posedge clk) begin
+        snake1 <= snake1_wire;
+        snake2 <= snake2_wire;
+    end
     initial begin
         clk_rate = 0;
         // random position for food at initialization
-        food1 = 'habcd;
-        food2 = 'h1234;
+        food1 = 10'b1010101010;
+        food2 = 10'b0101010101;
         // length of 5, score of zero
-        score1 = 0;
-        score2 = 0;
+        score1 = 1;
+        score2 = 1;
     end
     clk_div u_clk_div (
     .clk         (clk),
@@ -98,7 +99,7 @@ module core (input clk,
     );
     collision_check u_collision_check (
     .snake1       (snake1),
-    .snake2      (snake2),
+    .snake2       (snake2),
     .clk             (clk),
     .should_stop1    (should_stop1_1),
     .should_stop2    (should_stop2_1)
@@ -113,19 +114,21 @@ module core (input clk,
     );
     moving_snake #(.index(0)) u_moving_snake_1
     (
-    .clk          (clk1),
-    .di           (d1),
+    .clk             (clk1),
+    .di              (d1),
     .prev_pos_num    (snake1),
-    .next_pos_num    (snake1),
-    .should_stop     (should_stop1_2)
+    .next_pos_num    (snake1_wire),
+    .should_stop     (should_stop1_2),
+    .len             (score1)
     );
     moving_snake #(.index(1)) u_moving_snake_2
     (
-    .clk          (clk2),
-    .di           (d2),
+    .clk             (clk2),
+    .di              (d2),
     .prev_pos_num    (snake2),
-    .next_pos_num    (snake2),
-    .should_stop     (should_stop2_2)
+    .next_pos_num    (snake2_wire),
+    .should_stop     (should_stop2_2),
+    .len             (score2)
     );
     
 endmodule
