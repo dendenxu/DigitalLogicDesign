@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="D:/3180105504/Project/clk_div_sim_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="clk_div_sim" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="8" />
+   <wvobject fp_name="/clk_div_sim/clk_game" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_game</obj_property>
+      <obj_property name="ObjectShortName">clk_game</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_div_sim/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_div_sim/clk_rate" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_rate[1:0]</obj_property>
+      <obj_property name="ObjectShortName">clk_rate[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_div_sim/uut/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_div_sim/uut/clk_rate" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_rate[1:0]</obj_property>
+      <obj_property name="ObjectShortName">clk_rate[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_div_sim/uut/clk_game" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_game</obj_property>
+      <obj_property name="ObjectShortName">clk_game</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_div_sim/uut/cnt" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cnt[31:0]</obj_property>
+      <obj_property name="ObjectShortName">cnt[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/clk_div_sim/uut/ratio" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ratio[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ratio[31:0]</obj_property>
+   </wvobject>
+</wave_config>

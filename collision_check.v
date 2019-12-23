@@ -1,7 +1,7 @@
 module collision_check #(len = 1,
                          max_len = 16,
                          num_len = 10)
-                       (input [159:0] snake1,
+                        (input [159:0] snake1,
                          input [159:0] snake2,
                          input clk,
                          output reg should_stop1,
@@ -17,5 +17,4 @@ module collision_check #(len = 1,
             if (snake2[num_len-1:0] == snake1[i*max_len+:num_len]) should_stop2 <= 1;
         end
     end
-
 endmodule
