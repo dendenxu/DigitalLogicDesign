@@ -1,14 +1,4 @@
-module core (input clk,
-             input [11:0] keystroke,
-             output reg [159:0] snake1,
-             output reg [159:0] snake2,
-             output reg [4:0] score1,
-             output reg [4:0] score2,
-             output reg [9:0] food1,
-             output reg [9:0] food2);
-    //  output reg snake1 [89:0][119:0],
-    //  output reg snake2 [89:0][119:0],
-    /**
+/**
      * @param keystroke
      * the first four[3:0] bit of key stroke will control the movement of snake1
      * when your bit is set, I'll take it that the key is pressed
@@ -52,6 +42,18 @@ module core (input clk,
      * when a snake body part is to be light up
      * I'll set the number of current position
      */
+module core (input clk_raw,
+             input [11:0] keystroke,
+             output reg [159:0] snake1,
+             output reg [159:0] snake2,
+             output reg [4:0] score1,
+             output reg [4:0] score2,
+             output reg [9:0] food1,
+             output reg [9:0] food2);
+
+    // TODO add the reset function to our input and output
+    wire clk;
+    assign clk = keystroke[9]?0:clk_raw;
     wire [1:0] d1;
     wire [1:0] d2;
     wire [159:0] snake1_wire;
@@ -75,7 +77,7 @@ module core (input clk,
     // 10 normal: 1HZ
     // 11 slower: 0.5HZ
     reg [1:0] clk_rate;
-    always@(posedge clk_game) begin
+    always@(posedge clk) begin
         if(keystroke[10]) clk_rate <= clk_rate + 1;
         if(keystroke[11]) clk_rate <= clk_rate - 1;
     end
