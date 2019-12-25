@@ -15,7 +15,7 @@ module core_sim;
         // Initialize Inputs
         keystroke = 12'b0000_0001_0001;
         #10000000 keystroke = 12'b0000_0010_0010;
-        #10000000 keystroke = 12'b0000_0100_0100;
+        #100000 keystroke[9] = 1;
         #10000000 keystroke = 12'b0000_1000_1000;
 
         // Wait 100 ns for global reset to finish

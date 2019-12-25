@@ -32,7 +32,10 @@ module moving_snake #(index = 1,
     genvar j;
     generate
     for (j = num_len; j < max_len*num_len; j = j + 1) begin
-        assign next_pos_num[j] = (should_stop||j>len*num_len)?prev_pos_num[j]:prev_pos_num[j-num_len];
+        // Fixed one terrifying bug here:
+        // the previous line wrote: assign next_pos_num[j] = (should_stop||j>=len*num_len)?prev_pos_num[j]:prev_pos_num[j-num_len];
+        // so the next bit will also be assign since the wanted condition was j<len*num_len
+        assign next_pos_num[j] = (should_stop||j>=len*num_len)?prev_pos_num[j]:prev_pos_num[j-num_len];
     end
     endgenerate
     always @(posedge clk) begin
