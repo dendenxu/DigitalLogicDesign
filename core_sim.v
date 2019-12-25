@@ -7,7 +7,7 @@ module core_sim;
 
     // Instantiate the Unit Under Test (UUT)
     core uut (
-        .clk(clk), 
+        .clk_raw(clk), 
         .keystroke(keystroke)
     );
 
