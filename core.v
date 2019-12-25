@@ -42,19 +42,29 @@
      * @param food2
      * the position of the two eatable food
      * it is alright to eat the other's food
+     * 
+     * 
+     * @param game_over
+     * whether both snakes are dead
+     * this variable changes to high when the should stop signal of both snakes are set
+     * and drops immediately when the previous condition changes
+     * if you want to do something with this value, be sure to use it in combination with keystroke
      */
 module core (input clk_raw,
              input [11:0] keystroke,
              output reg [159:0] snake1,
              output reg [159:0] snake2,
-             output reg [4:0] score1,
-             output reg [4:0] score2,
+             output reg [3:0] score1,
+             output reg [3:0] score2,
              output reg [9:0] food1,
-             output reg [9:0] food2);
+             output reg [9:0] food2,
+             output game_over);
 
     // TODO add the reset function to our input and output
     // TODO add food and score accumulation for our game
     // Thinking about implementing the seconde one first since when you hit reset you should be able to reset everything including the scores and food position and the length/position of our two small snakes
+    
+    assign game_over = should_stop1&&should_stop2;
     wire clk;
     assign clk = keystroke[9]?0:clk_raw;
     wire [1:0] d1;
