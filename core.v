@@ -52,6 +52,8 @@ module core (input clk_raw,
              output reg [9:0] food2);
 
     // TODO add the reset function to our input and output
+    // TODO add food and score accumulation for our game
+    // Thinking about implementing the seconde one first since when you hit reset you should be able to reset everything including the scores and food position and the length/position of our two small snakes
     wire clk;
     assign clk = keystroke[9]?0:clk_raw;
     wire [1:0] d1;
