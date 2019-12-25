@@ -8,39 +8,40 @@
      * [3] down
      * the four bit[7:4] following will control the movement of snake2
      * bit[8] will clear current game, can be conprehended as a reset key(like when your snake collapes or dies), however it will clear current game even if you're still   playing
-     * bit[9] will save current game, like a pause key, pressing it again will resume the game
+     * bit[9] will save current game, like a pause key, pressing it again should resume the game(and this logic should be implemented by yueyue)
+     * I will only save or pause the game base on the status of this bit, high for pausing, and low for resuming
      * bit[10] will speed up the game(harder to play)
+     * this bit shouldn't be set to high for too long
+     * it's the keystroke implementer's duty to make sure that this bit is set to high for smaller than one clk period(since I'll check for speed update on every clk(50MHZ))
      * bit[11] will slow down the game(easier to play)
+     * same restriction for as bit[10]
      * default speed is 1HZ
      * other bits are to be defined
      *
-     * @param clk
+     * @param clk_raw
      * system clock of 50MHZ
      *
      * @param snake1
      * @param snake2
-     * currently computing position as a 90*120 net
+     * currently computing position as a 24*32 net
      * easy to display on a 4:3 screen
-     * I wrote nodule num2pos.v to compute the current position to a net of a 16-bit number
-     * thought I'd use it in core, but I didn't
-     * you may use it to display the snake on screen
+     * every snake part is a 10bit integer
+     * snake_part%32 should produce its x-value
+     * snake_part/32 should produce its y-value
+     * currently the longest snake is 16 part(chosen this number for resourse purpose(poor board))
+     * you can render the snake according to its current score, which is its length, discarding the rest of the snake array
+     * even though I'll the the rest of the snake to high, representing there inexistence
      *
      * @param score1
      * @param score1
      * the score of your little snake
      * which can be comprehended as the length of your snake
-     * the default value is 5 for both snakes
+     * the default value is 1 for both snakes
      *
      * @param food1
      * @param food2
      * the position of the two eatable food
      * it is alright to eat the other's food
-     */
-    
-    /**the number representation of our small snake is in the two variable snake1 and snake2
-     * the longest snake shouldn't be longer than 65535
-     * when a snake body part is to be light up
-     * I'll set the number of current position
      */
 module core (input clk_raw,
              input [11:0] keystroke,
@@ -103,7 +104,7 @@ module core (input clk_raw,
         score1 = 2;
         score2 = 2;
         snake1 = 160'b_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_00_0000_0001_00_0000_0010;
-        snake2 = 160'b_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_00_0000_1001_00_0000_1010;
+        snake2 = 160'b_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_00_0001_0011_00_0001_0100;
     end
     // assign should_stop1_1 = 0;
     // assign should_stop2_1 = 0;
