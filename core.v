@@ -108,17 +108,20 @@ module core #(max_len = 16,
     end
     reg changed;
     always @(posedge clk) begin
+        score1 <= score1_wire;
+        score2 <= score2_wire;
+        food1 <= food1_wire;
+        food2 <= food2_wire;
+    end
+    always @(posedge clk) begin
         if(clk_game&&~changed) begin
-            score1 = score1_wire;
-            score2 = score2_wire;
-            food1 = food1_wire;
-            food2 = food2_wire;
-            snake1 = snake1_wire;
-            snake2 = snake2_wire;
-            changed = (food1>=width*height||food2>=width*height||food1==snake1[num_len-1:0]||food2==snake2[num_len-1:0])?0:1;
+            snake1 <= snake1_wire;
+            snake2 <= snake2_wire;
+            // changed = (food1>=width*height||food2>=width*height||food1==snake1[num_len-1:0]||food2==snake2[num_len-1:0])?0:1;
+            changed <= 0;
         end
         else if (~clk_game) begin
-            changed = 0;
+            changed <= 0;
         end
     end
     initial begin

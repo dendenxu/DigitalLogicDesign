@@ -33,30 +33,22 @@ module moving_snake #(max_len = 16,
     // actually previous implementation is much too complex for our board
     // so we just evaluate current situation and save the state in two small registers
     reg [num_len-1:0] next_pos;
-    reg enable;
     assign next_pos_num[num_len-1:0] = should_stop?prev_pos_num[num_len-1:0]:next_pos;
-    genvar j;
-    generate
-    for (j = num_len; j < max_len*num_len; j = j + 1) begin
-        // Fixed one terrifying bug here:
-        // the previous line wrote: assign next_pos_num[j] = (should_stop||j>=len*num_len)?prev_pos_num[j]:prev_pos_num[j-num_len];
-        // so the next bit will also be assign since the wanted condition was j<len*num_len
-        // assign next_pos_num[j] = (should_stop||j>=len*num_len)?prev_pos_num[j]:prev_pos_num[j-num_len];
-        assign next_pos_num[j] = (should_stop&&~enable)?prev_pos_num[j]:prev_pos_num[j-num_len];
-    end
-    endgenerate
-    reg [3:0] cnt;
-    always @(posedge clk_raw) begin
-        if(clk) begin
-            if(cnt == 4'b1111) begin
-                cnt <= 0;
-                enable <= 0;
-            end else begin
-                cnt <= cnt + 1;
-                enable <= 1;
-            end
-        end
-    end
+    assign next_pos_num[num_len*max_len-1:num_len] = (should_stop)?prev_pos_num[num_len*max_len-1:num_len]:prev_pos_num[num_len*max_len-num_len-1:0];
+
+    // reg enable;
+    // reg [3:0] cnt;
+    // always @(posedge clk_raw) begin
+    //     if(clk) begin
+    //         if(cnt == 4'b1111) begin
+    //             cnt <= 0;
+    //             enable <= 0;
+    //         end else begin
+    //             cnt <= cnt + 1;
+    //             enable <= 1;
+    //         end
+    //     end
+    // end
     always @(posedge clk) begin
         case (di)
             2'b00: begin
