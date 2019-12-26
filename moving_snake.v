@@ -1,10 +1,11 @@
 module moving_snake #(max_len = 16,
                       num_len = 10,
                       width = 32,
-                      height = 24)
+                      height = 24,
+                      max_len_bit_len = 4)
                      (input clk,
                       input [1:0] di,
-                      input [3:0] len,
+                      input [max_len_bit_len-1:0] len,
                       input [max_len*num_len-1:0] prev_pos_num,
                       output [max_len*num_len-1:0] next_pos_num,
                       output reg should_stop);

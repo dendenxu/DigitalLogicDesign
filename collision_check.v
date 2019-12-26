@@ -1,6 +1,7 @@
 module collision_check #(len = 1,
                          max_len = 16,
-                         num_len = 10)
+                         num_len = 10,
+                         max_len_bit_len = 4)
                         (input [max_len*num_len-1:0] snake1,
                          input [max_len*num_len-1:0] snake2,
                          input clk,

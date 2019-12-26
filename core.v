@@ -54,13 +54,14 @@
      * if you want to do something with this value, be sure to use it in combination with keystroke
      */
 module core #(max_len = 16,
-              num_len = 10)
+              num_len = 10,
+              max_len_bit_len = 4)
               (input clk_raw,
              input [11:0] keystroke,
              output reg [max_len*num_len-1:0] snake1,
              output reg [max_len*num_len-1:0] snake2,
-             output reg [3:0] score1,
-             output reg [3:0] score2,
+             output reg [max_len_bit_len-1:0] score1,
+             output reg [max_len_bit_len-1:0] score2,
              output reg [num_len-1:0] food1,
              output reg [num_len-1:0] food2,
              output game_over);
