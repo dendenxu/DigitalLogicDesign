@@ -1,11 +1,12 @@
-module moving_snake #(index = 1,
-                      max_len = 16,
-                      num_len = 10)
+module moving_snake #(max_len = 16,
+                      num_len = 10,
+                      width = 32,
+                      height = 24)
                      (input clk,
                       input [1:0] di,
                       input [3:0] len,
-                      input [159:0] prev_pos_num,
-                      output [159:0] next_pos_num,
+                      input [max_len*num_len-1:0] prev_pos_num,
+                      output [max_len*num_len-1:0] next_pos_num,
                       output reg should_stop);
     /**@param di
      * two bit representation of direction
@@ -27,7 +28,7 @@ module moving_snake #(index = 1,
     /**the previous positions are all copied mindlessly when they are able to be copied */
     // actually previous implementation is much too complex for our board
     // so we just evaluate current situation and save the state in two small registers
-    reg [9:0] next_pos;
+    reg [num_len-1:0] next_pos;
     assign next_pos_num[num_len-1:0] = should_stop?prev_pos_num[num_len-1:0]:next_pos;
     genvar j;
     generate
@@ -41,7 +42,7 @@ module moving_snake #(index = 1,
     always @(posedge clk) begin
         case (di)
             2'b00: begin
-                if (prev_pos_num[num_len-1:0]%32 == 0) should_stop <= 1;
+                if (prev_pos_num[num_len-1:0]%width == 0) should_stop <= 1;
                 else begin
                     should_stop <= 0;
                     if (prev_pos_num[num_len*2-1:num_len] != prev_pos_num[num_len-1:0]-1) begin
@@ -53,7 +54,7 @@ module moving_snake #(index = 1,
                 end
             end
             2'b01: begin
-                if (prev_pos_num[num_len-1:0]%32 == 31) should_stop <= 1;
+                if (prev_pos_num[num_len-1:0]%width == width-1) should_stop <= 1;
                 else begin
                     should_stop <= 0;
                     if (prev_pos_num[num_len*2-1:num_len] != prev_pos_num[num_len-1:0]+1) begin
@@ -65,11 +66,11 @@ module moving_snake #(index = 1,
                 end
             end
             2'b10: begin
-                if (prev_pos_num[num_len-1:0]/32 == 0) should_stop <= 1;
+                if (prev_pos_num[num_len-1:0]/width == 0) should_stop <= 1;
                 else begin
                     should_stop <= 0;
-                    if (prev_pos_num[num_len*2-1:num_len] != prev_pos_num[num_len-1:0]-32) begin
-                        next_pos <= prev_pos_num[num_len-1:0]-32;
+                    if (prev_pos_num[num_len*2-1:num_len] != prev_pos_num[num_len-1:0]-width) begin
+                        next_pos <= prev_pos_num[num_len-1:0]-width;
                     end
                     else begin
                         next_pos <= prev_pos_num[(len-1)*num_len+:num_len];
@@ -77,11 +78,11 @@ module moving_snake #(index = 1,
                 end
             end
             2'b11: begin
-                if (prev_pos_num[num_len-1:0]/32 == 23) should_stop <= 1;
+                if (prev_pos_num[num_len-1:0]/width == height-1) should_stop <= 1;
                 else begin
                     should_stop <= 0;
-                    if (prev_pos_num[num_len*2-1:num_len] != prev_pos_num[num_len-1:0]+32) begin
-                        next_pos <= prev_pos_num[num_len-1:0]+32;
+                    if (prev_pos_num[num_len*2-1:num_len] != prev_pos_num[num_len-1:0]+width) begin
+                        next_pos <= prev_pos_num[num_len-1:0]+width;
                     end
                     else begin
                         next_pos <= prev_pos_num[(len-1)*num_len+:num_len];

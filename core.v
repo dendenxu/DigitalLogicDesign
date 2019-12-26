@@ -36,12 +36,15 @@
      * @param score1
      * the score of your little snake
      * which can be comprehended as the length of your snake
-     * the default value is 1 for both snakes
+     * the default value is 2 for both snakes
      *
      * @param food1
      * @param food2
      * the position of the two eatable food
      * it is alright to eat the other's food
+     * nonono it's not alright
+     * stay to your own food...
+     * if it's allowed to eat one another's food, when two snakes are eating the same food, the result can be undefined
      * 
      * 
      * @param game_over
@@ -50,27 +53,29 @@
      * and drops immediately when the previous condition changes
      * if you want to do something with this value, be sure to use it in combination with keystroke
      */
-module core (input clk_raw,
+module core #(max_len = 16,
+              num_len = 10)
+              (input clk_raw,
              input [11:0] keystroke,
-             output reg [159:0] snake1,
-             output reg [159:0] snake2,
+             output reg [max_len*num_len-1:0] snake1,
+             output reg [max_len*num_len-1:0] snake2,
              output reg [3:0] score1,
              output reg [3:0] score2,
-             output reg [9:0] food1,
-             output reg [9:0] food2,
+             output reg [num_len-1:0] food1,
+             output reg [num_len-1:0] food2,
              output game_over);
 
     // TODO add the reset function to our input and output
     // TODO add food and score accumulation for our game
-    // Thinking about implementing the seconde one first since when you hit reset you should be able to reset everything including the scores and food position and the length/position of our two small snakes
+    // Thinking about implementing the second one first since when you hit reset you should be able to reset everything including the scores and food position and the length/position of our two small snakes
     
     assign game_over = should_stop1&&should_stop2;
     wire clk;
     assign clk = keystroke[9]?0:clk_raw;
     wire [1:0] d1;
     wire [1:0] d2;
-    wire [159:0] snake1_wire;
-    wire [159:0] snake2_wire;
+    wire [max_len*num_len-1:0] snake1_wire;
+    wire [max_len*num_len-1:0] snake2_wire;
     wire clk1;
     wire clk2;
     wire should_stop1;
@@ -138,7 +143,7 @@ module core (input clk_raw,
     .keys    (keystroke[7:4]),
     .di      (d2)
     );
-    moving_snake #(.index(0)) u_moving_snake_1
+    moving_snake u_moving_snake_1
     (
     .clk             (clk1),
     .di              (d1),
@@ -147,7 +152,7 @@ module core (input clk_raw,
     .should_stop     (should_stop1_2),
     .len             (score1)
     );
-    moving_snake #(.index(1)) u_moving_snake_2
+    moving_snake u_moving_snake_2
     (
     .clk             (clk2),
     .di              (d2),
