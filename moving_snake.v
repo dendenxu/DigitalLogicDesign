@@ -4,6 +4,7 @@ module moving_snake #(max_len = 16,
                       height = 24,
                       max_len_bit_len = 4)
                      (input clk,
+                      input clk_raw,
                       input [1:0] di,
                       input [max_len_bit_len-1:0] len,
                       input [max_len*num_len-1:0] prev_pos_num,
@@ -18,6 +19,8 @@ module moving_snake #(max_len = 16,
      */
     initial begin
         should_stop = 0;
+        enable = 0;
+        cnt = 0;
         // intial position
         // for (i = 0; i < 5; i = i + 1) begin
         //     next_pos_num[i] = index ? 30 - i : i;
@@ -30,6 +33,7 @@ module moving_snake #(max_len = 16,
     // actually previous implementation is much too complex for our board
     // so we just evaluate current situation and save the state in two small registers
     reg [num_len-1:0] next_pos;
+    reg enable;
     assign next_pos_num[num_len-1:0] = should_stop?prev_pos_num[num_len-1:0]:next_pos;
     genvar j;
     generate
@@ -37,9 +41,22 @@ module moving_snake #(max_len = 16,
         // Fixed one terrifying bug here:
         // the previous line wrote: assign next_pos_num[j] = (should_stop||j>=len*num_len)?prev_pos_num[j]:prev_pos_num[j-num_len];
         // so the next bit will also be assign since the wanted condition was j<len*num_len
-        assign next_pos_num[j] = (should_stop||j>=len*num_len)?prev_pos_num[j]:prev_pos_num[j-num_len];
+        // assign next_pos_num[j] = (should_stop||j>=len*num_len)?prev_pos_num[j]:prev_pos_num[j-num_len];
+        assign next_pos_num[j] = (should_stop&&~enable)?prev_pos_num[j]:prev_pos_num[j-num_len];
     end
     endgenerate
+    reg [3:0] cnt;
+    always @(posedge clk_raw) begin
+        if(clk) begin
+            if(cnt == 4'b1111) begin
+                cnt <= 0;
+                enable <= 0;
+            end else begin
+                cnt <= cnt + 1;
+                enable <= 1;
+            end
+        end
+    end
     always @(posedge clk) begin
         case (di)
             2'b00: begin

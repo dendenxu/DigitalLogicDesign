@@ -55,16 +55,18 @@
      */
 module core #(max_len = 16,
               num_len = 10,
-              max_len_bit_len = 4)
-              (input clk_raw,
-             input [11:0] keystroke,
-             output reg [max_len*num_len-1:0] snake1,
-             output reg [max_len*num_len-1:0] snake2,
-             output reg [max_len_bit_len-1:0] score1,
-             output reg [max_len_bit_len-1:0] score2,
-             output reg [num_len-1:0] food1,
-             output reg [num_len-1:0] food2,
-             output game_over);
+              max_len_bit_len = 4,
+              width = 32,
+              height = 24)
+             (input clk_raw,
+              input [11:0] keystroke,
+              output reg [max_len*num_len-1:0] snake1,
+              output reg [max_len*num_len-1:0] snake2,
+              output reg [max_len_bit_len-1:0] score1,
+              output reg [max_len_bit_len-1:0] score2,
+              output reg [num_len-1:0] food1,
+              output reg [num_len-1:0] food2,
+              output game_over);
 
     // TODO add the reset function to our input and output
     // TODO add food and score accumulation for our game
@@ -77,6 +79,10 @@ module core #(max_len = 16,
     wire [1:0] d2;
     wire [max_len*num_len-1:0] snake1_wire;
     wire [max_len*num_len-1:0] snake2_wire;
+    wire [max_len_bit_len-1:0] score1_wire;
+    wire [max_len_bit_len-1:0] score2_wire;
+    wire [num_len-1:0] food1_wire;
+    wire [num_len-1:0] food2_wire;
     wire clk1;
     wire clk2;
     wire should_stop1;
@@ -103,27 +109,47 @@ module core #(max_len = 16,
     reg changed;
     always @(posedge clk) begin
         if(clk_game&&~changed) begin
-            snake1 <= snake1_wire;
-            snake2 <= snake2_wire;
-            changed <= 1;
+            score1 = score1_wire;
+            score2 = score2_wire;
+            food1 = food1_wire;
+            food2 = food2_wire;
+            snake1 = snake1_wire;
+            snake2 = snake2_wire;
+            changed = (food1>=width*height||food2>=width*height||food1==snake1[num_len-1:0]||food2==snake2[num_len-1:0])?0:1;
         end
         else if (~clk_game) begin
-            changed <= 0;
+            changed = 0;
         end
     end
     initial begin
         clk_rate = 0;
         // random position for food at initialization
-        food1 = 10'b1010101010;
-        food2 = 10'b0101010101;
+        food1 = 10'b00_0000_0011;
+        food2 = 10'b00_1010_0011;
         // length of 5, score of zero
         score1 = 2;
         score2 = 2;
         snake1 = 160'b_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_00_0000_0001_00_0000_0010;
         snake2 = 160'b_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_11_1111_1111_00_0010_0100_00_0010_0011;
     end
-    // assign should_stop1_1 = 0;
-    // assign should_stop2_1 = 0;
+
+    food_check u_food_check_1(
+    	.clk        (clk),
+        .snake_head (snake1[num_len-1:0]),
+        .prev_food  (food1),
+        .next_food  (food1_wire),
+        .prev_score (score1),
+        .next_score (score1_wire)
+    );
+
+    food_check u_food_check_2(
+    	.clk        (clk),
+        .snake_head (snake2[num_len-1:0]),
+        .prev_food  (food2),
+        .next_food  (food2_wire),
+        .prev_score (score2),
+        .next_score (score2_wire)
+    );
     clk_div u_clk_div (
     .clk         (clk),
     .clk_rate    (clk_rate),
@@ -147,6 +173,7 @@ module core #(max_len = 16,
     moving_snake u_moving_snake_1
     (
     .clk             (clk1),
+    .clk_raw         (clk),
     .di              (d1),
     .prev_pos_num    (snake1),
     .next_pos_num    (snake1_wire),
@@ -156,6 +183,7 @@ module core #(max_len = 16,
     moving_snake u_moving_snake_2
     (
     .clk             (clk2),
+    .clk_raw         (clk),
     .di              (d2),
     .prev_pos_num    (snake2),
     .next_pos_num    (snake2_wire),
