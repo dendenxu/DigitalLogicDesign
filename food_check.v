@@ -2,6 +2,7 @@ module food_check #(max_len = 16,
                     num_len = 10,
                     max_len_bit_len = 4)
                    (input clk,
+                    input en_rand,
                     input [num_len-1:0] snake_head,
                     input [num_len-1:0] prev_food,
                     input [max_len_bit_len-1:0] prev_score,
@@ -28,7 +29,7 @@ module food_check #(max_len = 16,
             next_food  <= rand_food;
         end else begin
             next_score <= prev_score;
-            next_food <= prev_food;
+            next_food <= en_rand?rand_food:prev_food;
         end
     end
 endmodule

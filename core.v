@@ -106,19 +106,25 @@ module core #(max_len = 16,
         if(keystroke[10]) clk_rate <= clk_rate + 1;
         if(keystroke[11]) clk_rate <= clk_rate - 1;
     end
-    reg changed;
+    reg en_rand_1, en_rand_2;
+    reg ok;
     always @(posedge clk) begin
-        score1 <= score1_wire;
-        score2 <= score2_wire;
-        food1 <= food1_wire;
-        food2 <= food2_wire;
+        if(clk_game&&~ok) begin
+            score1 = score1_wire;
+            score2 = score2_wire;
+            en_rand_1 = ~((food1!=food2)&&(food1!=food1_wire)&&(food1<width*height));
+            en_rand_2 = ~((food1!=food2)&&(food2!=food2_wire)&&(food2<width*height));
+            ok = ~en_rand_1&&~en_rand_2;
+            food1 = food1_wire;
+            food2 = food2_wire;
+        end else ok = 0;
     end
+    reg changed;
     always @(posedge clk) begin
         if(clk_game&&~changed) begin
             snake1 <= snake1_wire;
             snake2 <= snake2_wire;
-            // changed = (food1>=width*height||food2>=width*height||food1==snake1[num_len-1:0]||food2==snake2[num_len-1:0])?0:1;
-            changed <= 0;
+            changed <= 1;
         end
         else if (~clk_game) begin
             changed <= 0;
@@ -138,6 +144,7 @@ module core #(max_len = 16,
 
     food_check u_food_check_1(
     	.clk        (clk),
+        .en_rand    (en_rand_1),
         .snake_head (snake1[num_len-1:0]),
         .prev_food  (food1),
         .next_food  (food1_wire),
@@ -147,6 +154,7 @@ module core #(max_len = 16,
 
     food_check u_food_check_2(
     	.clk        (clk),
+        .en_rand    (en_rand_2),
         .snake_head (snake2[num_len-1:0]),
         .prev_food  (food2),
         .next_food  (food2_wire),

@@ -19,15 +19,7 @@ module moving_snake #(max_len = 16,
      */
     initial begin
         should_stop = 0;
-        enable = 0;
-        cnt = 0;
-        // intial position
-        // for (i = 0; i < 5; i = i + 1) begin
-        //     next_pos_num[i] = index ? 30 - i : i;
-        // end
-        // for (i = 5; i < = 30; i = i + 1) begin
-        //     next_pos_num[i] = 'hffff;
-        // end
+        next_pos = prev_pos_num[num_len-1:0];
     end
     /**the previous positions are all copied mindlessly when they are able to be copied */
     // actually previous implementation is much too complex for our board
@@ -35,20 +27,6 @@ module moving_snake #(max_len = 16,
     reg [num_len-1:0] next_pos;
     assign next_pos_num[num_len-1:0] = should_stop?prev_pos_num[num_len-1:0]:next_pos;
     assign next_pos_num[num_len*max_len-1:num_len] = (should_stop)?prev_pos_num[num_len*max_len-1:num_len]:prev_pos_num[num_len*max_len-num_len-1:0];
-
-    // reg enable;
-    // reg [3:0] cnt;
-    // always @(posedge clk_raw) begin
-    //     if(clk) begin
-    //         if(cnt == 4'b1111) begin
-    //             cnt <= 0;
-    //             enable <= 0;
-    //         end else begin
-    //             cnt <= cnt + 1;
-    //             enable <= 1;
-    //         end
-    //     end
-    // end
     always @(posedge clk) begin
         case (di)
             2'b00: begin
