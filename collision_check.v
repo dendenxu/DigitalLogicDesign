@@ -29,6 +29,5 @@ module collision_check #(max_len = 16,
                 if (snake1[num_len-1:0] == snake2[i*num_len+:num_len]) should_stop1 <= 1;
             end
         end
-
     end
 endmodule

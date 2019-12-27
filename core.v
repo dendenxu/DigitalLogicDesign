@@ -110,11 +110,11 @@ module core #(max_len = 16,
     reg should_stop1;
     wire should_stop1_1;
     wire should_stop1_2;
-    always@(*) should_stop1 = (keystroke[8])?init_should_stop1:(should_stop1_1 || should_stop1_2);
+    always@(posedge clk) should_stop1 <= (keystroke[8])?init_should_stop1:(should_stop1_1 || should_stop1_2);
     reg should_stop2;
     wire should_stop2_1;
     wire should_stop2_2;
-    always@(*) should_stop2 = (keystroke[8])?init_should_stop2:(should_stop2_1 || should_stop2_2);
+    always@(posedge clk) should_stop2 <= (keystroke[8])?init_should_stop2:(should_stop2_1 || should_stop2_2);
     // clk_game is the divided clk(very slow) and is human processable
     // is the output of clk_div module, can shift speed according to current clk shift ratio
     // however this will be a pain in simulation since the computer needs to compute too much things that I don't even care
@@ -250,7 +250,7 @@ module core #(max_len = 16,
     .clk             (clk1),
     .rst             (keystroke[8]),
     .di              (d1),
-    .prev_pos_num    (snake1),
+    .prev_pos_num    ((keystroke[8])?init_snake1:snake1),
     .next_pos_num    (snake1_wire),
     .should_stop     (should_stop1_2),
     .len             (score1)
@@ -260,7 +260,7 @@ module core #(max_len = 16,
     .clk             (clk2),
     .rst             (keystroke[8]),
     .di              (d2),
-    .prev_pos_num    (snake2),
+    .prev_pos_num    ((keystroke[8])?init_snake2:snake2),
     .next_pos_num    (snake2_wire),
     .should_stop     (should_stop2_2),
     .len             (score2)

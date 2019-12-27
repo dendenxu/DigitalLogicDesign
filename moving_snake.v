@@ -25,11 +25,12 @@ module moving_snake #(max_len = 16,
     // actually previous implementation is much too complex for our board
     // so we just evaluate current situation and save the state in two small registers
     reg [num_len-1:0] next_pos;
-    assign next_pos_num[num_len-1:0] = should_stop?prev_pos_num[num_len-1:0]:next_pos;
-    assign next_pos_num[num_len*max_len-1:num_len] = (should_stop)?prev_pos_num[num_len*max_len-1:num_len]:prev_pos_num[num_len*max_len-num_len-1:0];
+    assign next_pos_num[num_len-1:0] = (should_stop||rst)?prev_pos_num[num_len-1:0]:next_pos;
+    assign next_pos_num[num_len*max_len-1:num_len] = (should_stop||rst)?prev_pos_num[num_len*max_len-1:num_len]:prev_pos_num[num_len*max_len-num_len-1:0];
     always @(posedge clk, posedge rst) begin
         if (rst) begin
             should_stop <= 0;
+            next_pos <= prev_pos_num[num_len-1:0];
         end else begin
             case (di)
                 2'b00: begin
