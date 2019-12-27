@@ -3,7 +3,7 @@ module clk_div(input clk,
                input [1:0] clk_rate,
                output reg clk_game);
     reg [31:0] cnt;
-    reg [31:0] ratio;
+    reg [3:0] ratio;
     initial begin
         cnt = 0;
         ratio = 4;
