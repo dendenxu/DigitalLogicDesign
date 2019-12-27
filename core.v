@@ -107,14 +107,14 @@ module core #(max_len = 16,
     assign clk2 = should_stop2 ? 1'b0 : clk_game;
     // used in combination to stop the snake
     // the reason why we need two stop signals is that it can be driven by both collision check and moving snake module
-    wire should_stop1;
+    reg should_stop1;
     wire should_stop1_1;
     wire should_stop1_2;
-    assign should_stop1 = should_stop1_1 || should_stop1_2;
-    wire should_stop2;
+    always@(*) should_stop1 = should_stop1_1 || should_stop1_2;
+    reg should_stop2;
     wire should_stop2_1;
     wire should_stop2_2;
-    assign should_stop2 = should_stop2_1 || should_stop2_2;
+    always@(*) should_stop2 = should_stop2_1 || should_stop2_2;
     // clk_game is the divided clk(very slow) and is human processable
     // is the output of clk_div module, can shift speed according to current clk shift ratio
     // however this will be a pain in simulation since the computer needs to compute too much things that I don't even care
