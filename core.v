@@ -140,7 +140,8 @@ module core #(max_len = 16,
     end
 
     food_check u_food_check_1(
-    .clk        (clk),
+    .clk_raw    (clk),
+    .clk        (clk_game),
     .snake1     (snake1),
     .snake2     (snake2),
     .food2      (food2),
@@ -152,7 +153,8 @@ module core #(max_len = 16,
     );
 
     food_check u_food_check_2(
-    .clk        (clk),
+    .clk_raw    (clk),
+    .clk        (clk_game),
     .snake1     (snake1),
     .snake2     (snake2),
     .food2      (food1),

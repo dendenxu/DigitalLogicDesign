@@ -3,7 +3,8 @@ module food_check #(max_len = 16,
                     max_len_bit_len = 4,
                     width = 32,
                     height = 24)
-                   (input clk,
+                   (input clk_raw,
+                    input clk,
                     input [max_len*num_len-1:0] snake1,
                     input [max_len*num_len-1:0] snake2,
                     input [num_len-1:0] food2,
@@ -38,7 +39,7 @@ module food_check #(max_len = 16,
         end else if (~clk) not_assigned_yet = 1;
     end
     lfsr u_lfsr(
-    .clk (clk),
+    .clk (clk_raw),
     .rst (1'b0),
     .en  (1'b1),
     .out (rand_food)
@@ -50,7 +51,7 @@ module food_check #(max_len = 16,
         next_food = prev_food;
         rand_food_usable = 0;
     end
-    always @(posedge clk) begin
+    always @(posedge clk_raw) begin
         if (snake_head == prev_food) begin
             next_score <= prev_score + 1;
             next_food  <= rand_food_usable;
