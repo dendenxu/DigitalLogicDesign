@@ -110,11 +110,11 @@ module core #(max_len = 16,
     reg should_stop1;
     wire should_stop1_1;
     wire should_stop1_2;
-    always@(*) should_stop1 = should_stop1_1 || should_stop1_2;
+    always@(*) should_stop1 = (keystroke[8])?init_should_stop1:(should_stop1_1 || should_stop1_2);
     reg should_stop2;
     wire should_stop2_1;
     wire should_stop2_2;
-    always@(*) should_stop2 = should_stop2_1 || should_stop2_2;
+    always@(*) should_stop2 = (keystroke[8])?init_should_stop2:(should_stop2_1 || should_stop2_2);
     // clk_game is the divided clk(very slow) and is human processable
     // is the output of clk_div module, can shift speed according to current clk shift ratio
     // however this will be a pain in simulation since the computer needs to compute too much things that I don't even care
@@ -137,16 +137,16 @@ module core #(max_len = 16,
     always @(posedge clk) begin
         if(clk_game&&~ok) begin
             score1 <= (keystroke[8])?init_score1:score1_wire;
-            score2 <= (keystroke[8])?init_score1:score2_wire;
+            score2 <= (keystroke[8])?init_score2:score2_wire;
             food1 <= (keystroke[8])?init_food1:food1_wire;
-            food2 <= (keystroke[8])?init_food1:food2_wire;
+            food2 <= (keystroke[8])?init_food2:food2_wire;
             ok <= (keystroke[8])?init_ok:1;
         end else if(~clk_game) ok <= (keystroke[8])?init_ok:0;
         else begin
             score1 <= (keystroke[8])?init_score1:score1;
-            score2 <= (keystroke[8])?init_score1:score2;
+            score2 <= (keystroke[8])?init_score2:score2;
             food1 <= (keystroke[8])?init_food1:food1;
-            food2 <= (keystroke[8])?init_food1:food2;
+            food2 <= (keystroke[8])?init_food2:food2;
             ok <= (keystroke[8])?init_ok:ok;
         end
     end
@@ -170,6 +170,8 @@ module core #(max_len = 16,
     // in simulation you can easily identify bad thing with red color (ISim put x as red)
     // but I hate to see too many red lines
     // INITIAL VALUES ARE DEFINED HERE (USED IN INITIAL STATEMENT AND RESET)
+    localparam init_should_stop1 = 0;
+    localparam init_should_stop2 = 0;
     localparam init_changed = 0;
     localparam init_ok = 0;
     localparam init_clk_rate = 0;
@@ -180,6 +182,8 @@ module core #(max_len = 16,
     localparam init_snake1 = {{(max_len-init_score1)*num_len{1'b1}},20'b00_0000_0001_00_0000_0010};
     localparam init_snake2 = {{(max_len-init_score2)*num_len{1'b1}},20'b00_0010_0100_00_0010_0011};
     initial begin
+        should_stop1 = init_should_stop1;
+        should_stop2 = init_should_stop2;
         changed = init_changed;
         ok = init_ok;
         clk_rate = init_clk_rate;
@@ -224,11 +228,12 @@ module core #(max_len = 16,
     .clk_game    (clk_game)
     );
     collision_check u_collision_check (
-    .snake1       (snake1),
-    .snake2       (snake2),
-    .len1          (score1),
-    .len2          (score2),
+    .snake1          (snake1),
+    .snake2          (snake2),
+    .len1            (score1),
+    .len2            (score2),
     .clk             (clk),
+    .rst             (keystroke[8]),
     .should_stop1    (should_stop1_1),
     .should_stop2    (should_stop2_1)
     );
@@ -243,6 +248,7 @@ module core #(max_len = 16,
     moving_snake u_moving_snake_1
     (
     .clk             (clk1),
+    .rst             (keystroke[8]),
     .di              (d1),
     .prev_pos_num    (snake1),
     .next_pos_num    (snake1_wire),
@@ -252,6 +258,7 @@ module core #(max_len = 16,
     moving_snake u_moving_snake_2
     (
     .clk             (clk2),
+    .rst             (keystroke[8]),
     .di              (d2),
     .prev_pos_num    (snake2),
     .next_pos_num    (snake2_wire),
