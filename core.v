@@ -141,6 +141,9 @@ module core #(max_len = 16,
 
     food_check u_food_check_1(
     .clk        (clk),
+    .snake1     (snake1),
+    .snake2     (snake2),
+    .food2      (food2),
     .snake_head (snake1[num_len-1:0]),
     .prev_food  (food1),
     .next_food  (food1_wire),
@@ -150,6 +153,9 @@ module core #(max_len = 16,
 
     food_check u_food_check_2(
     .clk        (clk),
+    .snake1     (snake1),
+    .snake2     (snake2),
+    .food2      (food1),
     .snake_head (snake2[num_len-1:0]),
     .prev_food  (food2),
     .next_food  (food2_wire),
