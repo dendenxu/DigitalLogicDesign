@@ -25,7 +25,7 @@ module clk_div(input clk,
         // division is 5000_0000 if your desired time is 1s
         // so it should be 1250_0000 to satisfy our need
         // if (cnt < 1250_0000*ratio) begin
-        if (cnt < 1250_0*ratio) begin
+        if (cnt < 1250_0000*ratio) begin
             cnt <= cnt + 1;
         end
         else begin
