@@ -1,3 +1,6 @@
+/* verilator lint_off UNOPTFLAT */
+// check whether a snake has eaten a food
+// and generate the food position randomly
 module food_check #(max_len = 16,
                     num_len = 10,
                     max_len_bit_len = 4,
@@ -17,7 +20,6 @@ module food_check #(max_len = 16,
     // I assume maybe this can be implemented the same way as the collision checker is done
     // just make the length of the snakes to be 1
     // We need to make sure that the rand_food usable doesn't appear where the snake is
-    /* verilator lint_off UNOPTFLAT */
     wire [num_len-1:0] rand_food;
     reg [num_len-1:0] rand_food_usable;
     wire food_pos_is_good;

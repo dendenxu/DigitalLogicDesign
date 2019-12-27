@@ -1,4 +1,7 @@
 /* verilator lint_off STMTDLY */
+// clock divider for speed shift
+// according to the value of clock rate, change accumulation limit
+// a multiplexer is used as a case statement
 module clk_div(input clk,
                input [1:0] clk_rate,
                output reg clk_game);

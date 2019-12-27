@@ -243,7 +243,6 @@ module core #(max_len = 16,
     moving_snake u_moving_snake_1
     (
     .clk             (clk1),
-    .clk_raw         (clk),
     .di              (d1),
     .prev_pos_num    (snake1),
     .next_pos_num    (snake1_wire),
@@ -253,7 +252,6 @@ module core #(max_len = 16,
     moving_snake u_moving_snake_2
     (
     .clk             (clk2),
-    .clk_raw         (clk),
     .di              (d2),
     .prev_pos_num    (snake2),
     .next_pos_num    (snake2_wire),

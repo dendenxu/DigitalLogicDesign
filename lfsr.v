@@ -1,3 +1,5 @@
+// psuedo-random number generator
+// @param num_len the length of the random number to be generated, shouldn't be less than 8
 module lfsr#(num_len = 10)
             (input clk,
              input rst,

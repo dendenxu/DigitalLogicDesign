@@ -1,3 +1,4 @@
+// a multiplexer for converting keyboard input to directions
 module key2di(input [3:0] keys,
               output reg [1:0] di);
     always @(*) begin

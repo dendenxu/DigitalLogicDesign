@@ -4,7 +4,6 @@ module moving_snake #(max_len = 16,
                       height = 24,
                       max_len_bit_len = 4)
                      (input clk,
-                      input clk_raw,
                       input [1:0] di,
                       input [max_len_bit_len-1:0] len,
                       input [max_len*num_len-1:0] prev_pos_num,
