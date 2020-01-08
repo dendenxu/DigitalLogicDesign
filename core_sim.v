@@ -6,7 +6,7 @@ module core_sim;
     reg [11:0] keystroke;
 
     // Instantiate the Unit Under Test (UUT)
-    core uut (
+    core #(.max_len(32),.max_len_bit_len(5))uut (
         .clk_raw(clk), 
         .keystroke(keystroke)
     );
