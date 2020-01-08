@@ -24,6 +24,7 @@ module core_sim;
         #4000000 keystroke = 12'b0000_1000_0010;
         keystroke[8] = 1;#50 keystroke[8] = 0;
         #1000000 keystroke = 12'b0000_0010_0010;
+        #10000000 keystroke[8] = 1;#50 keystroke[8] = 0;
 
 
         // Wait 100 ns for global reset to finish
