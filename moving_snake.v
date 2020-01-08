@@ -1,4 +1,4 @@
-module moving_snake #(max_len = 16,
+module moving_snake #(max_len = 15,
                       num_len = 10,
                       width = 32,
                       height = 24,

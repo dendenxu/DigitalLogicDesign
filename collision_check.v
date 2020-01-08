@@ -1,7 +1,7 @@
 // collision checker module
 // if a snake is in one another's body, he's dead
 // @param len the current length of the snake
-module collision_check #(max_len = 16,
+module collision_check #(max_len = 15,
                          num_len = 10,
                          max_len_bit_len = 4)
                         (input [max_len*num_len-1:0] snake1,

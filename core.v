@@ -67,7 +67,7 @@
  */
 
 // TODO add the reset function to our input and output
-module core #(max_len = 16,
+module core #(max_len = 15,
               num_len = 10,
               max_len_bit_len = 4,
               width = 32,
