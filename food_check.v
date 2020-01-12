@@ -1,9 +1,9 @@
 /* verilator lint_off UNOPTFLAT */
 // check whether a snake has eaten a food
 // and generate the food position randomly
-module food_check #(max_len = 16,
+module food_check #(max_len = 31,
                     num_len = 10,
-                    max_len_bit_len = 4,
+                    max_len_bit_len = 5,
                     width = 32,
                     height = 24)
                    (input clk_raw,

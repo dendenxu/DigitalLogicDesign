@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 
-module vga_main #(max_len = 16,
+module vga_main #(max_len = 31,
               num_len = 10,
-              max_len_bit_len = 4,
+              max_len_bit_len = 5,
               width = 32,
               height = 24) (
     

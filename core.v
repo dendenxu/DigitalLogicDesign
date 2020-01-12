@@ -1,8 +1,8 @@
 /* verilator lint_off UNOPTFLAT */
 /* THE INTERFACE OF THIS FILE IS PUT IN INTERFACE_CORE.TXT UNDER THE SAME DIRECTORY */
-module core #(max_len = 16,
+module core #(max_len = 31,
               num_len = 10,
-              max_len_bit_len = 4,
+              max_len_bit_len = 5,
               width = 32,
               height = 24,
               clk_div_num = 1250_0000,

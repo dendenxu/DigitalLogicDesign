@@ -1,8 +1,8 @@
-module moving_snake #(max_len = 16,
+module moving_snake #(max_len = 31,
                       num_len = 10,
                       width = 32,
                       height = 24,
-                      max_len_bit_len = 4)
+                      max_len_bit_len = 5)
                      (input stoped,
                       input clk,
                       input rst,
@@ -38,48 +38,28 @@ module moving_snake #(max_len = 16,
                     if (prev_pos_num[num_len-1:0]%width == 0) should_stop <= 1;
                     else begin
                         should_stop <= 0;
-                        if (prev_pos_num[num_len*2-1:num_len] != prev_pos_num[num_len-1:0]-1) begin
-                            next_pos <= prev_pos_num[num_len-1:0]-1;
-                        end
-                        else begin
-                            next_pos <= prev_pos_num[(len-1)*num_len+:num_len];
-                        end
+                        next_pos <= prev_pos_num[num_len-1:0]-1;
                     end
                 end
                 2'b01: begin
                     if (prev_pos_num[num_len-1:0]%width == width-1) should_stop <= 1;
                     else begin
                         should_stop <= 0;
-                        if (prev_pos_num[num_len*2-1:num_len] != prev_pos_num[num_len-1:0]+1) begin
-                            next_pos <= prev_pos_num[num_len-1:0]+1;
-                        end
-                        else begin
-                            next_pos <= prev_pos_num[(len-1)*num_len+:num_len];
-                        end
+                        next_pos <= prev_pos_num[num_len-1:0]+1;
                     end
                 end
                 2'b10: begin
                     if (prev_pos_num[num_len-1:0]/width == 0) should_stop <= 1;
                     else begin
                         should_stop <= 0;
-                        if (prev_pos_num[num_len*2-1:num_len] != prev_pos_num[num_len-1:0]-width) begin
-                            next_pos <= prev_pos_num[num_len-1:0]-width;
-                        end
-                        else begin
-                            next_pos <= prev_pos_num[(len-1)*num_len+:num_len];
-                        end
+                        next_pos <= prev_pos_num[num_len-1:0]-width;
                     end
                 end
                 2'b11: begin
                     if (prev_pos_num[num_len-1:0]/width == height-1) should_stop <= 1;
                     else begin
                         should_stop <= 0;
-                        if (prev_pos_num[num_len*2-1:num_len] != prev_pos_num[num_len-1:0]+width) begin
-                            next_pos <= prev_pos_num[num_len-1:0]+width;
-                        end
-                        else begin
-                            next_pos <= prev_pos_num[(len-1)*num_len+:num_len];
-                        end
+                        next_pos <= prev_pos_num[num_len-1:0]+width;
                     end
                 end
             endcase
