@@ -1,7 +1,7 @@
 /* verilator lint_off UNOPTFLAT */
 // check whether a snake has eaten a food
 // and generate the food position randomly
-module food_check #(max_len = 15,
+module food_check #(max_len = 16,
                     num_len = 10,
                     max_len_bit_len = 4,
                     width = 32,
@@ -28,18 +28,19 @@ module food_check #(max_len = 15,
     reg not_assigned_yet;
     generate
     genvar i;
-        for (i = 0; i < max_len; i = i + 1) begin
-            assign food_not_in_snake1[i] = rand_food!=snake1[i*num_len+:num_len];
-            assign food_not_in_snake2[i] = rand_food!=snake2[i*num_len+:num_len];
-        end
-    endgenerate
-    assign food_pos_is_good = (&food_not_in_snake1)&&(&food_not_in_snake2)&&(rand_food!=food2)&&(rand_food!=prev_food)&&(rand_food < width*height);
-    always @(*) begin
-        if (food_pos_is_good&&not_assigned_yet&&clk) begin
-            rand_food_usable = rand_food;
-            not_assigned_yet = 0;
-        end else if (~clk) not_assigned_yet = 1;
+    for (i = 0; i < max_len; i = i + 1) begin: food_check_block
+        assign food_not_in_snake1[i] = rand_food!=snake1[i*num_len+:num_len];
+        assign food_not_in_snake2[i] = rand_food!=snake2[i*num_len+:num_len];
     end
+    endgenerate
+    assign food_pos_is_good = (&food_not_in_snake1)&&(&food_not_in_snake2)&&(rand_food!=food2)&&(rand_food!=prev_food)&&(rand_food < width*height)&&not_assigned_yet;
+    always @(posedge clk_raw) begin
+        if (food_pos_is_good) begin
+            rand_food_usable <= rand_food;
+            not_assigned_yet <= 0;
+        end else not_assigned_yet <= 1;
+    end
+
     lfsr u_lfsr(
     .clk (clk_raw),
     .rst (1'b0),

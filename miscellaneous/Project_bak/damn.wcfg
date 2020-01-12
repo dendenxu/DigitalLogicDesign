@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="D:/3180105504/Project/core_sim_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="core_sim" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="36" />
+   <wvobject fp_name="/core_sim/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/keystroke" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">keystroke[11:0]</obj_property>
+      <obj_property name="ObjectShortName">keystroke[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/clk1" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk1</obj_property>
+      <obj_property name="ObjectShortName">clk1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/clk2" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk2</obj_property>
+      <obj_property name="ObjectShortName">clk2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/should_stop1" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">should_stop1</obj_property>
+      <obj_property name="ObjectShortName">should_stop1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/should_stop1_1" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">should_stop1_1</obj_property>
+      <obj_property name="ObjectShortName">should_stop1_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/should_stop1_2" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">should_stop1_2</obj_property>
+      <obj_property name="ObjectShortName">should_stop1_2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/should_stop2" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">should_stop2</obj_property>
+      <obj_property name="ObjectShortName">should_stop2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/should_stop2_1" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">should_stop2_1</obj_property>
+      <obj_property name="ObjectShortName">should_stop2_1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/should_stop2_2" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">should_stop2_2</obj_property>
+      <obj_property name="ObjectShortName">should_stop2_2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/clk_game" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_game</obj_property>
+      <obj_property name="ObjectShortName">clk_game</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/snake1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">snake1[159:0]</obj_property>
+      <obj_property name="ObjectShortName">snake1[159:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/snake2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">snake2[159:0]</obj_property>
+      <obj_property name="ObjectShortName">snake2[159:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/score1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">score1[3:0]</obj_property>
+      <obj_property name="ObjectShortName">score1[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/score2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">score2[3:0]</obj_property>
+      <obj_property name="ObjectShortName">score2[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/food1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">food1[9:0]</obj_property>
+      <obj_property name="ObjectShortName">food1[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/food2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">food2[9:0]</obj_property>
+      <obj_property name="ObjectShortName">food2[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/clk_rate" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_rate[1:0]</obj_property>
+      <obj_property name="ObjectShortName">clk_rate[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/ok" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ok</obj_property>
+      <obj_property name="ObjectShortName">ok</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/changed" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">changed</obj_property>
+      <obj_property name="ObjectShortName">changed</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/snake1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">snake1[159:0]</obj_property>
+      <obj_property name="ObjectShortName">snake1[159:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/snake2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">snake2[159:0]</obj_property>
+      <obj_property name="ObjectShortName">snake2[159:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/food2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">food2[9:0]</obj_property>
+      <obj_property name="ObjectShortName">food2[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/snake_head" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">snake_head[9:0]</obj_property>
+      <obj_property name="ObjectShortName">snake_head[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/prev_food" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">prev_food[9:0]</obj_property>
+      <obj_property name="ObjectShortName">prev_food[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/prev_score" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">prev_score[3:0]</obj_property>
+      <obj_property name="ObjectShortName">prev_score[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/rand_food" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rand_food[9:0]</obj_property>
+      <obj_property name="ObjectShortName">rand_food[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/food_not_in_snake1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">food_not_in_snake1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">food_not_in_snake1[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/food_not_in_snake2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">food_not_in_snake2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">food_not_in_snake2[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/next_score" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">next_score[3:0]</obj_property>
+      <obj_property name="ObjectShortName">next_score[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/next_food" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">next_food[9:0]</obj_property>
+      <obj_property name="ObjectShortName">next_food[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/rand_food_usable" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rand_food_usable[9:0]</obj_property>
+      <obj_property name="ObjectShortName">rand_food_usable[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/not_assigned_yet" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">not_assigned_yet</obj_property>
+      <obj_property name="ObjectShortName">not_assigned_yet</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/food_pos_is_good" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">food_pos_is_good</obj_property>
+      <obj_property name="ObjectShortName">food_pos_is_good</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/clk_raw" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_raw</obj_property>
+      <obj_property name="ObjectShortName">clk_raw</obj_property>
+   </wvobject>
+   <wvobject fp_name="/core_sim/uut/u_food_check_1/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+</wave_config>

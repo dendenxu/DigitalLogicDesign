@@ -1,0 +1,24 @@
+
+module TOP(
+    input clk,
+    input ps2_clk,
+    input ps2_data,
+    output wire hs, vs,
+    output wire [3:0] r,g,b
+);
+    wire [159:0] snake1, snake2;
+    wire [3:0] score1, score2;
+    wire [9:0] food1, food2;
+    wire game_over;
+    wire [12:0] keystroke;
+    wire [9:0]data;
+    reg [31:0] clkdiv;
+    always @ (posedge clk) begin
+        clkdiv<= clkdiv+1'b1;
+    end
+    core c0(.clk_raw(clk), .keystroke(keystroke[12:0]), .snake1(snake1), .snake2(snake2), .food1(food1), .food2(food2), .score1(score1), .score2(score2), .game_over(game_over));
+    vga_main v0(.snake1(snake1), .snake2(snake2), .score1(score1), .score2(score2), .food1(food1), .food2(food2), .game_over(game_over), .keystroke(keystroke[12:0]), .vga_clk(clkdiv[1]), .vga_rst(1'b1), .hs(hs), .vs(vs), .r(r), .g(g), .b(b));
+    ps2control m1(.clk(clk), .ps2_clk(ps2_clk), .ps2_data(ps2_data), .rst(1), .data(data));
+    getinput m2(.clk(clk), .data(data), .clk_valid(clk), .key_stroke(keystroke[12:0]));
+    
+endmodule

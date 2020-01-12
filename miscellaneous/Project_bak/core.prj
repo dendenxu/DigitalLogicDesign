@@ -1,0 +1,7 @@
+verilog work "../../Documents/Materials/DENDEN/PROJ/Verilog/kao_ban_zi/lfsr.v"
+verilog work "../../Documents/Materials/DENDEN/PROJ/Verilog/kao_ban_zi/moving_snake.v"
+verilog work "../../Documents/Materials/DENDEN/PROJ/Verilog/kao_ban_zi/key2di.v"
+verilog work "../../Documents/Materials/DENDEN/PROJ/Verilog/kao_ban_zi/food_check.v"
+verilog work "../../Documents/Materials/DENDEN/PROJ/Verilog/kao_ban_zi/collision_check.v"
+verilog work "../../Documents/Materials/DENDEN/PROJ/Verilog/kao_ban_zi/clk_div.v"
+verilog work "../../Documents/Materials/DENDEN/PROJ/Verilog/kao_ban_zi/core.v"

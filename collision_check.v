@@ -1,7 +1,7 @@
 // collision checker module
 // if a snake is in one another's body, he's dead
 // @param len the current length of the snake
-module collision_check #(max_len = 15,
+module collision_check #(max_len = 16,
                          num_len = 10,
                          max_len_bit_len = 4)
                         (input [max_len*num_len-1:0] snake1,
@@ -22,11 +22,14 @@ module collision_check #(max_len = 15,
             should_stop1 <= 0;
             should_stop2 <= 0;
         end else begin
-            for (i = 0; i < len1; i = i + 1) begin
+        // When the the snake touches some one's body, it's gonna die
+            for (i = 1; i < len1; i = i + 1) begin
                 if (snake2[num_len-1:0] == snake1[i*num_len+:num_len]) should_stop2 <= 1;
+                if (snake1[num_len-1:0] == snake1[i*num_len+:num_len]) should_stop1 <= 1;
             end
-            for (i = 0; i < len2; i = i + 1) begin
+            for (i = 1; i < len2; i = i + 1) begin
                 if (snake1[num_len-1:0] == snake2[i*num_len+:num_len]) should_stop1 <= 1;
+                if (snake2[num_len-1:0] == snake2[i*num_len+:num_len]) should_stop2 <= 1;
             end
         end
     end

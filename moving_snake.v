@@ -1,9 +1,10 @@
-module moving_snake #(max_len = 15,
+module moving_snake #(max_len = 16,
                       num_len = 10,
                       width = 32,
                       height = 24,
                       max_len_bit_len = 4)
-                     (input clk,
+                     (input stoped,
+                      input clk,
                       input rst,
                       input [1:0] di,
                       input [max_len_bit_len-1:0] len,
@@ -25,8 +26,8 @@ module moving_snake #(max_len = 15,
     // actually previous implementation is much too complex for our board
     // so we just evaluate current situation and save the state in two small registers
     reg [num_len-1:0] next_pos;
-    assign next_pos_num[num_len-1:0] = (should_stop||rst)?prev_pos_num[num_len-1:0]:next_pos;
-    assign next_pos_num[num_len*max_len-1:num_len] = (should_stop||rst)?prev_pos_num[num_len*max_len-1:num_len]:prev_pos_num[num_len*max_len-num_len-1:0];
+    assign next_pos_num[num_len-1:0] = (should_stop||rst||stoped)?prev_pos_num[num_len-1:0]:next_pos;
+    assign next_pos_num[num_len*max_len-1:num_len] = (should_stop||rst||stoped)?prev_pos_num[num_len*max_len-1:num_len]:prev_pos_num[num_len*max_len-num_len-1:0];
     always @(posedge clk, posedge rst) begin
         if (rst) begin
             should_stop <= 0;

@@ -1,0 +1,66 @@
+/**
+ * INTERFACE DEFINITION
+ * if you just want to instantiate this module, you don't need to read the source
+ * I'll put necessary information here for your reference
+ * @param keystroke
+ * the first four[3:0] bit of key stroke will control the movement of snake1
+ * when your bit is set, I'll take it that the key is pressed
+ * [0] left
+ * [1] right
+ * [2] up
+ * [3] down
+ * the four bit[7:4] following will control the movement of snake2
+ * bit[8] will clear current game, can be conprehended as a reset key(like when your snake collapes or dies), however it will clear current game even if you'r  still   playing
+ * bit[9] will save current game, like a pause key, pressing it again should resume the game(and this logic should be implemented by yueyue)
+ * I will only save or pause the game base on the status of this bit, high for pausing, and low for resuming
+ * bit[10] will speed up the game(harder to play)
+ * this bit shouldn't be set to high for too long
+ * it's the keystroke implementer's duty to make sure that this bit is set to high for smaller than one clk period(since I'll check for speed update on every c  (50MHZ))
+ * bit[11] will slow down the game(easier to play)
+ * same restriction for as bit[10]
+ * default speed is 1HZ
+ * other bits are to be defined
+ *
+ * @param clk_raw
+ * system clock of 50MHZ
+ *
+ * @param snake1
+ * @param snake2
+ * currently computing position as a 24*32 net
+ * easy to display on a 4:3 screen
+ * every snake part is a 10bit integer
+ * snake_part%32 should produce its x-value
+ * snake_part/32 should produce its y-value
+ * currently the longest snake is 16 part(chosen this number for resourse purpose(poor board))
+ * you can render the snake according to its current score, which is its length, discarding the rest of the snake array
+ * even though I'll the the rest of the snake to high, representing there inexistence
+ *
+ * @param score1
+ * @param score1
+ * the score of your little snake
+ * which can be comprehended as the length of your snake
+ * the default value is 2 for both snakes
+ *
+ * @param food1
+ * @param food2
+ * the position of the two eatable food
+ * it is alright to eat the other's food
+ * nonono it's not alright
+ * stay to your own food...
+ * if it's allowed to eat one another's food, when two snakes are eating the same food, the result can be undefined
+ *
+ *
+ * @param game_over
+ * whether both snakes are dead
+ * this variable changes to high when the should stop signal of both snakes are set
+ * and drops immediately when the previous condition changes
+ * if you want to do something with this value, be sure to use it in combination with keystroke
+ *
+ *
+ * @real_parameter max_len max length of a snake
+ * @real_parameter num_len number of bits used to represent a postion as a number (already illustrated above)
+ * @real_parameter max_len_bit_len number of bits used to represent the max_len (used by some counting register to save register bits)
+ * @real_parameter width the width of the screen (unit: snake part)
+ * @real_parameter width the height of the screen (unit: snake part)
+ *
+ */
