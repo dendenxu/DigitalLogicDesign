@@ -387,24 +387,24 @@ Surprisingly, there do exist multiple approaches to fulfill that wish. Quantitie
 
 - Auto Completion
 
-   ![img](core.assets/clip_image002.jpg)
+   ![auto_completion](core.assets/auto_completion.png)
 
 - Code Snippet
 
-   ![img](core.assets/clip_image004.jpg)
+   ![code_snippet](core.assets/code_snippet.png)
 
 - Reference Searching
 
-   ![img](core.assets/clip_image006.jpg)
+   ![reference_searching](core.assets/reference_searching.png)
 
 - Auto Format
 
-   ![img](core.assets/clip_image008.jpg)
+   ![auto_format](core.assets/auto_format.png)
 
 - Advanced Syntax Highlighting
 
-   ![img](core.assets/clip_image009.png)
+   ![advanced_syntax_highlighting](core.assets/advanced_syntax_highlighting.png)
 
 - Handy Syntax Checking
 
-   ![img](core.assets/clip_image011.jpg)
+   ![syntax_checking](core.assets/syntax_checking.png)
